@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_2048/constants.dart';
 import 'package:game_2048/game.dart';
 
 // ignore: must_be_immutable
@@ -29,11 +30,7 @@ class Cell extends StatelessWidget {
       child: Center(
         child: Text(
           data == null ? '' : data.toString(),
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
-          ),
+          style: ts
         ),
       ),
     );

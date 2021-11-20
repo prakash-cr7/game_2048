@@ -1,33 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:game_2048/cell.dart';
 import 'package:game_2048/constants.dart';
 import 'package:game_2048/game.dart';
 
-class Grid extends ConsumerWidget {
-  const Grid({Key? key}) : super(key: key);
-
-  //Create cells inside the grid
-  List<Cell> createCells(Game game) {
-    final List<Cell> cells = <Cell>[];
-    for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 4; j++) {
-        cells.add(Cell(
-          data: game.gameData[i][j],
-          key: ValueKey<int>(i * 4 + j),
-        ));
-      }
-    }
-    return cells;
-  }
+class Score extends ConsumerWidget {
+  const Score({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Container(
-      height: height / 2.5,
-      width: height / 2.5,
+      width: kIsWeb ? width * 0.25 : width * 0.8,
+      height: 55,
       decoration: BoxDecoration(
           border: Border.all(
             color: Colors.black,
@@ -42,11 +28,8 @@ class Grid extends ConsumerWidget {
               spreadRadius: 5,
             )
           ]),
-      child: IgnorePointer(
-        child: GridView.count(
-          crossAxisCount: 4,
-          children: createCells(game),
-        ),
+      child: Center(
+        child: Text('Score: ${game.score}', style: ts),
       ),
     );
   }
