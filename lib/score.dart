@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game_2048/constants.dart';
-import 'package:game_2048/game.dart';
+import 'package:game_2048/game_viewmodel.dart';
 
 class Score extends ConsumerWidget {
   const Score({Key? key}) : super(key: key);

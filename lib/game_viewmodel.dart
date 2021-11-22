@@ -25,15 +25,21 @@ class Game extends ChangeNotifier {
     [null, null, null, null],
   ];
 
-  void startGame() {
+  void restartGame() {
     isGameOver = false;
     score = 0;
-    addRandomTile();
-    addRandomTile();
+    gameData = [
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+    ];
+    _addRandomTile();
+    _addRandomTile();
     notifyListeners();
   }
 
-  void addRandomTile() {
+  void _addRandomTile() {
     if (isGameOver) return;
     List<Tuple> _index = [];
     for (int i = 0; i < 4; i++) {
@@ -47,11 +53,14 @@ class Game extends ChangeNotifier {
       int randomIndex = random.nextInt(_index.length);
       gameData[_index[randomIndex].a][_index[randomIndex].b] =
           random.nextInt(10) < 8 ? 2 : 4;
+
+      //check at the end of adding a random tile if the game is over
+      isGameOver = gameOver();
       notifyListeners();
     }
   }
 
-  void transposeGrid() {
+  void _transposeGrid() {
     List<List<int?>> _gameData = [
       [null, null, null, null],
       [null, null, null, null],
@@ -67,7 +76,8 @@ class Game extends ChangeNotifier {
     notifyListeners();
   }
 
-  void reverseMatrix() {
+  // flip the grid horizontally
+  void _reverseMatrix() {
     List<List<int?>> _gameData = [
       [null, null, null, null],
       [null, null, null, null],
@@ -83,7 +93,8 @@ class Game extends ChangeNotifier {
     notifyListeners();
   }
 
-  void compress() {
+  // move all tiles to the left
+  void _compress() {
     List<List<int?>> _gameData = [
       [null, null, null, null],
       [null, null, null, null],
@@ -103,7 +114,8 @@ class Game extends ChangeNotifier {
     notifyListeners();
   }
 
-  void combine() {
+  // combine all tiles with the same value
+  void _combine() {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 3; j++) {
         if (gameData[i][j] != null && gameData[i][j] == gameData[i][j + 1]) {
@@ -117,64 +129,58 @@ class Game extends ChangeNotifier {
   }
 
   void moveLeft() {
-    compress();
-    combine();
-    compress();
-    addRandomTile();
+    _compress();
+    _combine();
+    _compress();
+    _addRandomTile();
     notifyListeners();
   }
 
   void moveRight() {
-    reverseMatrix();
-    compress();
-    combine();
-    compress();
-    reverseMatrix();
-    addRandomTile();
+    _reverseMatrix();
+    _compress();
+    _combine();
+    _compress();
+    _reverseMatrix();
+    _addRandomTile();
     notifyListeners();
   }
 
   void moveUp() {
-    transposeGrid();
-    compress();
-    combine();
-    compress();
-    transposeGrid();
-    addRandomTile();
+    _transposeGrid();
+    _compress();
+    _combine();
+    _compress();
+    _transposeGrid();
+    _addRandomTile();
     notifyListeners();
   }
 
   void moveDown() {
-    transposeGrid();
-    reverseMatrix();
-    compress();
-    combine();
-    compress();
-    reverseMatrix();
-    transposeGrid();
-    addRandomTile();
+    _transposeGrid();
+    _reverseMatrix();
+    _compress();
+    _combine();
+    _compress();
+    _reverseMatrix();
+    _transposeGrid();
+    _addRandomTile();
     notifyListeners();
   }
 
-  void gameOver() {
-    bool isEmptyExists = false;
+  bool gameOver() {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
-        if (gameData[i][j] == null) {
-          isEmptyExists = true;
-        }
+        if (gameData[i][j] == null) return false;
       }
     }
-    if (!isEmptyExists && !_horizontalMoveExists() && !_verticalMoveExists()) {
-      isGameOver = true;
-      print(isGameOver);
-      notifyListeners();
-    } else {
-      isGameOver = false;
-      notifyListeners();
+    if (!_horizontalMoveExists() && !_verticalMoveExists()) {
+      return true;
     }
+    return false;
   }
 
+  // check if there is any horizontal move left
   bool _horizontalMoveExists() {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 3; j++) {
@@ -186,6 +192,7 @@ class Game extends ChangeNotifier {
     return false;
   }
 
+  // check if there is any vertical move left
   bool _verticalMoveExists() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 4; j++) {

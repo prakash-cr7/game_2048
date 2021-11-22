@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game_2048/constants.dart';
-import 'package:game_2048/game.dart';
+import 'package:game_2048/game_viewmodel.dart';
 import 'package:game_2048/grid.dart';
 import 'package:game_2048/score.dart';
 import 'package:swipe/swipe.dart';
