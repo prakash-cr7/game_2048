@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game_2048/constants.dart';
+import 'package:game_2048/ui/constants.dart';
 
 // ignore: must_be_immutable
 class Cell extends StatelessWidget {

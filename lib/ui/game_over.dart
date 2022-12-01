@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
-import 'game_viewmodel.dart';
+import '../game_logic.dart';
 
 class GameOver extends StatelessWidget {
   const GameOver({

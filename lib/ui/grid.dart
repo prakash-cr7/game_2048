@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:game_2048/cell.dart';
-import 'package:game_2048/constants.dart';
-import 'package:game_2048/game_viewmodel.dart';
+import 'package:game_2048/ui/cell.dart';
+import 'package:game_2048/ui/constants.dart';
+import 'package:game_2048/game_logic.dart';
 
 import 'game_over.dart';
 
